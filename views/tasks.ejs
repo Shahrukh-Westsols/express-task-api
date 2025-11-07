@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Tasks</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: #f4f4f4;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 80%;
+      margin: 0 auto;
+      border-collapse: collapse;
+      background: #fff;
+      box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    }
+    th, td {
+      padding: 12px;
+      border-bottom: 1px solid #ddd;
+      text-align: left;
+    }
+    th {
+      background: #007bff;
+      color: white;
+      text-transform: uppercase;
+    }
+    tr:nth-child(even) {
+      background: #f9f9f9;
+    }
+    tr:hover {
+      background: #e9e9e9;
+    }
+  </style>
+</head>
+<body>
+  <h1>All Tasks</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Title</th>
+        <th>Status</th>
+        <th>Priority</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% tasks.forEach(task => { %>
+        <tr>
+          <td><%= task.id %></td>
+          <td><%= task.title %></td>
+          <td><%= task.status %></td>
+          <td><%= task.priority %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</body>
+</html>
