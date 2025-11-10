@@ -1,12 +1,4 @@
-const express = require('express');
-
-// controllers/taskController.js
-
-let tasks = [
-  { id: 1, title: "Fix login bug", status: "Pending", priority: "High" },
-  { id: 2, title: "Update homepage UI", status: "Completed", priority: "Medium" },
-  { id: 3, title: "Write API documentation", status: "In Progress", priority: "Low" }
-];
+const tasks = require('../data/tasks');
 
 const getAllTasks = (req, res) => {
   res.json({ success: true, data: tasks });
@@ -19,12 +11,15 @@ const getTaskById = (req, res) => {
 };
 
 const createTask = (req, res) => {
-  const { title, status, priority } = req.body;
+  const { title, description, status, priority } = req.body;
   const newTask = {
     id: tasks.length + 1,
     title,
+    description: description || "",
     status,
-    priority
+    priority,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString()
   };
   tasks.push(newTask);
   res.status(201).json({ success: true, message: "Task created", data: newTask });
@@ -32,13 +27,15 @@ const createTask = (req, res) => {
 
 const updateTask = (req, res) => {
   const id = parseInt(req.params.id);
-  const { title, status, priority } = req.body;
+  const { title, description, status, priority } = req.body;
   const task = tasks.find(t => t.id === id);
   if (!task) return res.status(404).json({ success: false, message: "Task not found" });
 
   task.title = title || task.title;
+  task.description = description || task.description;
   task.status = status || task.status;
   task.priority = priority || task.priority;
+  task.updatedAt = new Date().toISOString();
 
   res.json({ success: true, message: "Task updated", data: task });
 };
@@ -51,7 +48,6 @@ const deleteTask = (req, res) => {
   tasks.splice(index, 1);
   res.json({ success: true, message: "Task deleted" });
 };
-
 
 module.exports = {
   getAllTasks,
