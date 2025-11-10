@@ -69,7 +69,7 @@ const createTask = (req, res) => {
 
   tasks.push(newTask);
 
-  res.status(201).json({ success: true, message: "Task created", data: newTask });
+  res.status(201).json({ success: true, message: `Task created successfully (id: ${newTask.id})`, data: newTask });
 };
 
 const updateTask = (req, res) => {
@@ -109,7 +109,7 @@ const updateTask = (req, res) => {
   task.priority = priority ? priority.toLowerCase() : task.priority;
   task.updatedAt = new Date().toISOString();
 
-  res.json({ success: true, message: "Task updated", data: task });
+  res.json({ success: true, message: `Task (id: ${task.id}) updated successfully`, data: task });
 };
 
 const deleteTask = (req, res) => {
@@ -127,7 +127,7 @@ const deleteTask = (req, res) => {
   tasks.splice(index, 1);
   res.json({
     success: true,
-    message: "Task deleted",
+    message: `Task (id: ${taskId}) deleted successfully`,
     data: null
   });
 };
@@ -139,90 +139,3 @@ module.exports = {
   updateTask,
   deleteTask
 };
-
-
-// const tasks = require('../data/tasks');
-
-// const validStatuses = ["pending", "in-progress", "completed"];
-// const validPriorities = ["low", "medium", "high"];
-
-// function validateTaskInput(data) {
-//   const errors = [];
-
-//   if (!data.title || data.title.trim() === "") {
-//     errors.push("Title is required.");
-//   } else if (data.title.length < 3 || data.title.length > 100) {
-//     errors.push("Title must be between 3 and 100 characters.");
-//   }
-
-//   if (data.description && data.description.length > 500) {
-//     errors.push("Description cannot exceed 500 characters.");
-//   }
-
-//   if (!data.status || !validStatuses.includes(data.status.toLowerCase())) {
-//     errors.push(`Status must be one of: ${validStatuses.join(", ")}.`);
-//   }
-
-//   if (!data.priority || !validPriorities.includes(data.priority.toLowerCase())) {
-//     errors.push(`Priority must be one of: ${validPriorities.join(", ")}.`);
-//   }
-
-//   return errors;
-// }
-
-// const getAllTasks = (req, res) => {
-//   res.json({ success: true, data: tasks });
-// };
-
-// const getTaskById = (req, res) => {
-//   const task = tasks.find(t => t.id === parseInt(req.params.id));
-//   if (!task) return res.status(404).json({ success: false, message: "Task not found" });
-//   res.json({ success: true, data: task });
-// };
-
-// const createTask = (req, res) => {
-//   const { title, description, status, priority } = req.body;
-//   const newTask = {
-//     id: tasks.length + 1,
-//     title,
-//     description: description || "",
-//     status,
-//     priority,
-//     createdAt: new Date().toISOString(),
-//     updatedAt: new Date().toISOString()
-//   };
-//   tasks.push(newTask);
-//   res.status(201).json({ success: true, message: "Task created", data: newTask });
-// };
-
-// const updateTask = (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const { title, description, status, priority } = req.body;
-//   const task = tasks.find(t => t.id === id);
-//   if (!task) return res.status(404).json({ success: false, message: "Task not found" });
-
-//   task.title = title || task.title;
-//   task.description = description || task.description;
-//   task.status = status || task.status;
-//   task.priority = priority || task.priority;
-//   task.updatedAt = new Date().toISOString();
-
-//   res.json({ success: true, message: "Task updated", data: task });
-// };
-
-// const deleteTask = (req, res) => {
-//   const id = parseInt(req.params.id);
-//   const index = tasks.findIndex(t => t.id === id);
-//   if (index === -1) return res.status(404).json({ success: false, message: "Task not found" });
-
-//   tasks.splice(index, 1);
-//   res.json({ success: true, message: "Task deleted" });
-// };
-
-// module.exports = {
-//   getAllTasks,
-//   getTaskById,
-//   createTask,
-//   updateTask,
-//   deleteTask,
-// };
